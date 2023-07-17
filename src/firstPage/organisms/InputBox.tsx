@@ -1,8 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 import RandomLocation from "./RandomLocation";
-import Title from "./Title";
-import WhiteBoxButton from "./WhiteBoxButton";
+import Title from "../atoms/Title";
+import WhiteBoxButton from "../atoms/WhiteBoxButton";
 
 const Container = styled.div`
   width: 100%;
