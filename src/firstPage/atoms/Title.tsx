@@ -1,18 +1,19 @@
 import styled from "styled-components";
 
 const TitleText = styled.div`
+  width: 60%;
+  height: 10%;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
-
+  margin: 10% 0 5% 0;
 `;
 const Title = () => {
     return (
         <TitleText>
-            <h4>
+            <span>
                 출발지를 입력하고<br/>중간장소를 찾아보세요!
-            </h4>
+            </span>
         </TitleText>
     )
 }
