@@ -7,7 +7,7 @@ const Container = styled.div`
 `;
 
 const Span = styled.span`
-
+  color: gray;
 `;
 
 const PlusFriend = () => {
@@ -16,9 +16,9 @@ const PlusFriend = () => {
     }
     return (
         <Container>
-            <span onClick={plusFriend}>
+            <Span onClick={plusFriend}>
                 친구 추가하기
-            </span>
+            </Span>
         </Container>
     )
 }
