@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import Background from './Background';
-import InputBox from './InputBox';
+import Background from './firstPage/Background';
+import InputBox from './firstPage/InputBox';
 
 function App() {
     return (
