@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
-import Background from './firstPage/atoms/Background';
-import InputBox from './firstPage/organisms/InputBox';
+import FirstPage from "./firstPage/pages/FirstPage";
 
 function App() {
     return (
         <div className="App">
-            <Background/>
-            <InputBox/>
+            <FirstPage/>
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, {useRef, useState} from "react";
+import PlusFriend from "./PlusFriend";
 
 interface Item {
     id: number;
@@ -43,25 +44,16 @@ const Friend = () => {
         <div>
             {inputItems.map((item, index) => (
                 <ItemBox key={index}>
-                    <div>라벨{index}</div>
                     <input
                         type="text"
                         className={`title-${index}`}
                         onChange={(e) => handleChange(e, index)}
                         value={item.location}
                     />
-
-                    {index === 0 && item.location.length < 4 && (
-                        <button onClick={addItem}> + </button>
-                    )}
-
-                    {index > 0 && inputItems[index - 1].location ? (
-                        <button onClick={() => deleteItem(item.id)}> - </button>
-                    ) : (
-                        ""
-                    )}
+                    <button onClick={() => deleteItem(item.id)}> -</button>
                 </ItemBox>
             ))}
+            <PlusFriend addItem={addItem}/>
         </div>
     );
 };

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RandomLocation from "./RandomLocation";
 import Title from "../atoms/Title";
 import WhiteBoxButton from "../atoms/WhiteBoxButton";
+import Friend from "./Friend";
 
 const Container = styled.div`
   width: 100%;
@@ -30,6 +31,7 @@ const InputBox = () => {
         <Container>
             <WhiteBox>
                 <Title/>
+                <Friend/>
                 <WhiteBoxButton/>
             </WhiteBox>
             <RandomLocation/>
