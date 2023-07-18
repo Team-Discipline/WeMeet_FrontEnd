@@ -21,7 +21,6 @@ const Container = styled.div`
   font-size: 20px;
   border-radius: 5px;
   border: solid 1px black;
-  margin: 0px 0 2% 2%;
 `;
 
 const Number = styled.span`

@@ -10,7 +10,7 @@ interface Item {
 
 const DivContainer = styled.div`
   width: 100%;
-  height: 60%;
+  height: 55%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,14 +19,15 @@ const DivContainer = styled.div`
 const FriendsContainer = styled.div`
   overflow: scroll;
   width: 100%;
-  height: 50%;
+  height: 40vh;
   max-height: 70%;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+
 `;
 
 const ItemBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 40%;
 `;
