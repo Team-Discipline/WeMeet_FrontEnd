@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import {SetStateAction, useState} from "react";
+
+interface Props {
+    searchLocation: () => void;
+}
 
 const OverlaySearchContainer = styled.div`
   width: 90%;
@@ -18,10 +23,19 @@ const Input = styled.input`
   padding: 5px;
 `;
 
-const OverlaySearch = () => {
+const OverlaySearch = ({searchLocation}: Props) => {
+    const [location, setLocation] = useState("");
+    const handleChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+        setLocation(e.target.value);
+    };
+    const handleKeyDown = (e: { key: string; }) => {
+        if (e.key === "Enter") {
+            searchLocation();
+        }
+    };
     return (
         <OverlaySearchContainer>
-            <Input placeholder="출발 위치를 입력해주세요"></Input>
+            <Input onChange={handleChange} onKeyDown={handleKeyDown} placeholder="출발 위치를 입력해주세요"></Input>
         </OverlaySearchContainer>
     )
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import OverlayHeaderBackArrow from "../atoms/OverlayHeaderBackArrow";
 import OverlaySearch from "./OverlaySearch";
-import OverlayHeaderSerching from "../atoms/OverlayHeaderSerching";
+import OverlayHeaderSearching from "../atoms/OverlayHeaderSearching";
 
 const Container = styled.div`
   width: 100vw;
@@ -12,11 +12,13 @@ const Container = styled.div`
 `;
 
 const OverlayHeader = () => {
+    const searchLocation = () => {
+    }
     return (
         <Container>
             <OverlayHeaderBackArrow/>
-            <OverlaySearch/>
-            <OverlayHeaderSerching/>
+            <OverlaySearch searchLocation={searchLocation}/>
+            <OverlayHeaderSearching searchLocation={searchLocation}/>
         </Container>
     )
 }
