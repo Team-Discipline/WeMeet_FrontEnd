@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import location from "../img/ic_mylocation.svg";
+import mylocation from "../img/ic_mylocation.svg";
+import useGeolocation from "./useGeolocation";
 
 const Container = styled.div`
   width: 95%;
@@ -15,18 +16,22 @@ const Container = styled.div`
 
 const Span = styled.span`
   color: #4683FF;
-  margin-left: 1%;
+  margin-left: 0.3%;
 `;
-const MyLocation = () => {
-    const loadingMyLocation = () => {
 
+// 이하 코드 동일
+
+const MyLocation = () => {
+    const location = useGeolocation();
+    const loadLocation = () => {
+        console.log(JSON.stringify(location))
     }
     return (
-        <Container onClick={loadingMyLocation}>
-            <img src={location}/>
+        <Container onClick={loadLocation}>
+            <img src={mylocation} alt=""/>
             <Span>내 위치 불러오기</Span>
         </Container>
-    )
-}
+    );
+};
 
 export default MyLocation;
