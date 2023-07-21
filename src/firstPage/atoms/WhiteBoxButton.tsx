@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const ButtonBox = styled.div`
   width: 100%;
-  height: 13%;
+  height: 10%;
   padding: 5%;
 `;
 
@@ -11,7 +11,7 @@ const Button = styled.button`
   font-size: 100%;
   background-color: #3c9aff;
   width: 95%;
-  height: 100%;
+  height: 5vh;
   border-radius: 15px;
   border-style: none;
 `;

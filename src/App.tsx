@@ -1,13 +1,11 @@
 import React from 'react';
 import './App.css';
-import Background from './firstPage/Background';
-import InputBox from './firstPage/InputBox';
+import FirstPage from "./firstPage/pages/FirstPage";
 
 function App() {
     return (
         <div className="App">
-            <Background/>
-            <InputBox/>
+            <FirstPage/>
         </div>
     );
 }
