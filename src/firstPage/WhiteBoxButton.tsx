@@ -19,6 +19,7 @@ const Button = styled.button`
 const WhiteBoxButton = () => {
     const findLocation = () => {
         console.log("백에 장소를 보내주고 중간 지점 위치들 받아오기");
+        window.location.replace("/result");
     }
     return (
         <ButtonBox>
