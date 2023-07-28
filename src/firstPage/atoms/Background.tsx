@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 // @ts-ignore
-import Backgorund from './img/background.png';
+import Backgorund from '../img/background.png';
 
 
 const ImgBox = styled.div`
