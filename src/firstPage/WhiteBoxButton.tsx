@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
 const ButtonBox = styled.div`
-  width: 100%;
-  height: 13%;
-  padding: 5%;
+  height: 48px;
+  background: var(--C08);
+  margin: 16px 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 12px;
 `;
 
 const Button = styled.button`

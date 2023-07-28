@@ -2,9 +2,11 @@ import styled from "styled-components";
 
 const TitleText = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  height: 128px;
+  align-content: center;
+  vertical-align: middle;
   align-items: center;
-  width: 60%;
 
 `;
 const Title = () => {
