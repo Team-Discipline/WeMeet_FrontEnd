@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Background from './firstPage/Background';
-import InputBox from './firstPage/InputBox';
+import Background from '../src/firstPage/atoms/Background';
+import InputBox from './firstPage/organisms/InputBox';
 import ResultPage from './resultPage/ResultPage';
 function App() {
     return (

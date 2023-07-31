@@ -1,18 +1,23 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from 'styled-components';
 import RandomLocation from "./RandomLocation";
-import Title from "./Title";
-import WhiteBoxButton from "./WhiteBoxButton";
-import StartLocate from "./StartLocate";
-import PlusFriend from "./PlusFriend";
-import ListLocate from "./StartLocate";
+import Title from "../atoms/Title";
+import WhiteBoxButton from "../atoms/WhiteBoxButton";
+import StartLocate from "../StartLocate";
+import PlusFriend from "../PlusFriend";
+import Friends from "./Friends";
+import InputLayout from "../pages/InputLayout";
 
+interface Item {
+    id: number;
+    location: string;
+}
 const Container = styled.div`
   width: 100%;
-  top: 50%;
+  top: 25%;
+  height: 100vh;
   left: 0;
-  transform: translateY(-50%);
-  position: absolute;
+  position: fixed;
   //display: flex;
   justify-content: center;
   flex-direction: column;
@@ -51,22 +56,55 @@ const Div = styled.div`
   align-items: center;
 `;
 const InputBox = () => {
-    const numberOfList = 2;
+    const numberOfList = useRef<number>(2)
+    const [inputItems, setInputItems] = useState<Item[]>([{id: 0, location: ""}, {id: 1, location: ""}]);
+    const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+    // 추가
+    const addItem = () => {
+        const input = {
+            id: numberOfList.current,
+            location: "",
+        };
+        setInputItems([...inputItems, input]);
+        numberOfList.current += 1;
+    }
+    // 삭제
+    const deleteItem = (index: number) => {
+        setInputItems(inputItems.filter((i) => i.id !== index));
+    }
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        index: number
+    ) => {
+        if (index >= inputItems.length) return;
+        const { value } = e.target;
+        const newItems = [...inputItems];
+        newItems[index].location = value;
+        setInputItems(newItems);
+    }
+    const handleSearchModal = (item: Item) => {
+      setShowSearchModal(true);
+      setSelectedItem(item)
+    }
+
     return (
         <Container>
             <WhiteBox>
                 <Title/>
                 <FriendContainer>
-                  {Array.from({length: numberOfList}, (_, i) => (
-                    <Div key={i}>
-                      <StartLocate i={i+1}/>
+                  {inputItems.map((item, index) => (
+                    <Div key={item.id}>
+                      <StartLocate onClick={() => handleSearchModal(item)} item={item} i={index+1} location={item.location} deleteItem={deleteItem}/>
                     </Div>
-                    ))}
+                  ))}
                 </FriendContainer>
-                <PlusFriend />
+                <PlusFriend addItem={addItem}/>
                 <WhiteBoxButton/>
             </WhiteBox>
             <RandomLocation/>
+          {showSearchModal && <InputLayout onClose={() => setShowSearchModal(false)}/> }
         </Container>
     )
 }

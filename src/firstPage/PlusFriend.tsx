@@ -1,12 +1,18 @@
 import styled from "styled-components";
-
-const PlusFriend = () => {
-      return (
-        <Div>
-          <Img src="img/ic_user_add.svg" alt="" />
-          <Span>친구 추가하기</Span>
-        </Div>
-    )
+import Plus from "./img/ic_user_add.svg";
+interface Props {
+    addItem: () => void;
+};
+const PlusFriend = ({addItem}: Props) => {
+  const plusFriend = () => {
+    addItem();
+  };
+  return (
+    <Div>
+      <Img src={Plus} alt="" />
+      <Span onClick={plusFriend}>친구 추가하기</Span>
+    </Div>
+  )
 }
 const Div = styled.div`
   height: 44px;
