@@ -10,13 +10,16 @@ const Container = styled.div`
   align-items: center;
   background-color: #FFFFFF;
 `;
+interface OverlayHeaderProps {
+  onClose: () => void;
+}
 
-const OverlayHeader = () => {
+const OverlayHeader: React.FC<OverlayHeaderProps> = ({ onClose }) => {
     const searchLocation = () => {
     }
     return (
         <Container>
-            <OverlayHeaderBackArrow/>
+            <OverlayHeaderBackArrow  onClose={onClose}/>
             <OverlaySearch searchLocation={searchLocation}/>
             <OverlayHeaderSearching searchLocation={searchLocation}/>
         </Container>

@@ -1,9 +1,12 @@
 import styled, {css, keyframes} from "styled-components";
 import OverlayHeader from "../organisms/OverlayHeader";
-import {useState} from "react";
+import React, {useEffect, useState} from "react";
 import MyLocation from "../organisms/MyLocation";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../app/store";
+import {setIsAnimating, setSearchModalState} from "../variable/searchModalSlice";
 interface Props {
-    onClose: () => void;
+    onClose: () => boolean;
 }
 const slideInAnimation = keyframes`
   from {
@@ -11,6 +14,14 @@ const slideInAnimation = keyframes`
   }
   to {
     transform: translateX(0);
+  }
+`;
+const slideOutAnimation = keyframes`
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
   }
 `;
 const FullScreenWrapper = styled.div`
@@ -23,10 +34,11 @@ const FullScreenWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const Container = styled.div<{isSearching: boolean }>`
+const Container = styled.div<{isSearching: boolean; isAnimating: boolean }>`
   position: fixed;
   top: 0;
-  right: ${({ isSearching }) => (isSearching ? "0" : "100%")};
+  right: ${({ isSearching, isAnimating }) =>
+          isSearching || isAnimating ? "0" : "100%"};  
   bottom: 0;
   left: 0;
   z-index: 9999;
@@ -36,11 +48,14 @@ const Container = styled.div<{isSearching: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: ${({ isSearching }) =>
-          isSearching &&
-          css`
-      ${slideInAnimation} 0.3s forwards;
-    `};
+  animation: ${({ isAnimating }) =>
+          isAnimating 
+          ? css`
+            ${slideInAnimation} 0.3s forwards
+            `
+          : css`
+              ${slideOutAnimation} 0.3s forwards
+            `};
 `;
 
 const Splitter = styled.div`
@@ -49,13 +64,22 @@ const Splitter = styled.div`
   background-color: #f6f6f6;
   border-top: solid 1px #dddddd;
 `;
-const InputLayout = ({onClose}: Props) => {
-    const [isSearching, setIsSearching] = useState(true);
-
+interface Item {
+    id: number;
+    location: string;
+}
+interface InputLayoutProps {
+  isAnimating: boolean;
+    selectedItem: Item | null;
+    onClose: () => void;
+}
+const InputLayout: React.FC<InputLayoutProps> = ({isAnimating, onClose}) => {
+  const isSearching = useSelector((state: RootState) => state.SearchModal.showSearchModal);
+  const dispatch = useDispatch();
     return (
       <FullScreenWrapper>
-        <Container isSearching = {isSearching}>
-            <OverlayHeader/>
+        <Container isSearching = {isSearching} isAnimating={isAnimating} >
+            <OverlayHeader onClose={onClose}/>
             <Splitter/>
             {isSearching ? <MyLocation/> : "no"}
         </Container>

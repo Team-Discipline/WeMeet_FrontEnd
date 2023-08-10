@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import styled from 'styled-components';
 import RandomLocation from "./RandomLocation";
 import Title from "../atoms/Title";
@@ -7,6 +8,8 @@ import StartLocate from "../StartLocate";
 import PlusFriend from "../PlusFriend";
 import Friends from "./Friends";
 import InputLayout from "../pages/InputLayout";
+import {RootState} from "../../app/store";
+import {setIsAnimating, setSearchModalState} from "../variable/searchModalSlice";
 
 interface Item {
     id: number;
@@ -18,7 +21,6 @@ const Container = styled.div`
   height: 100vh;
   left: 0;
   position: fixed;
-  //display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -58,9 +60,11 @@ const Div = styled.div`
 const InputBox = () => {
     const numberOfList = useRef<number>(2)
     const [inputItems, setInputItems] = useState<Item[]>([{id: 0, location: ""}, {id: 1, location: ""}]);
-    const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-
+    const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+    const [isAnimating, setIsAnimating] = useState<boolean>(false);
+    const isSearching = useSelector((state: RootState) => state.SearchModal.showSearchModal);
+    const dispatch = useDispatch();
     // 추가
     const addItem = () => {
         const input = {
@@ -86,9 +90,17 @@ const InputBox = () => {
     }
     const handleSearchModal = (item: Item) => {
       setShowSearchModal(true);
-      setSelectedItem(item)
+      dispatch(setSearchModalState(true));
+      setIsAnimating(true);
+      setSelectedItem(item);
     }
-
+    const handleBackPage = () => {
+      setIsAnimating(false); // 애니메이션 완료
+      setTimeout(() => {
+        dispatch(setSearchModalState(false)); // 모달 닫기
+        setShowSearchModal(false); // 모달 닫기
+      }, 300);
+    }
     return (
         <Container>
             <WhiteBox>
@@ -104,7 +116,13 @@ const InputBox = () => {
                 <WhiteBoxButton/>
             </WhiteBox>
             <RandomLocation/>
-          {showSearchModal && <InputLayout onClose={() => setShowSearchModal(false)}/> }
+          {showSearchModal && (
+            <InputLayout
+              isAnimating={isAnimating}
+              selectedItem={selectedItem}
+              onClose={handleBackPage}
+            />
+          )}
         </Container>
     )
 }
