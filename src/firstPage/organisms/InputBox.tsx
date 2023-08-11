@@ -88,10 +88,10 @@ const InputBox = () => {
         newItems[index].location = value;
         setInputItems(newItems);
     }
-    const handleSearchModal = (item: Item) => {
+    const handleSearchModal = (item: Item, fromDeleteButton: boolean) => {
       setShowSearchModal(true);
       dispatch(setSearchModalState(true));
-      setIsAnimating(true);
+      setIsAnimating(!fromDeleteButton);
       setSelectedItem(item);
     }
     const handleBackPage = () => {
@@ -108,7 +108,7 @@ const InputBox = () => {
                 <FriendContainer>
                   {inputItems.map((item, index) => (
                     <Div key={item.id}>
-                      <StartLocate onClick={() => handleSearchModal(item)} item={item} i={index+1} location={item.location} deleteItem={deleteItem}/>
+                      <StartLocate onClick={() => handleSearchModal(item, false)} item={item} i={index+1} location={item.location} deleteItem={()=>deleteItem(item.id)}/>
                     </Div>
                   ))}
                 </FriendContainer>

@@ -9,14 +9,18 @@ interface Props{
   i: number;
   location: string;
   deleteItem: (index: number) => void;
-  onClick: () => void;
+  onClick: (item: { id: number; location: string }) => void;
 }
 const StartLocate = ({item, i, location, deleteItem, onClick} :Props) => {
   return (
-    <Div onClick={onClick}>
+    <Div onClick={() => onClick(item)}>
       <span style={{display: 'block', fontWeight: '500', lineHeight: '24px', color: '#7975ff', marginRight: '6px', fontStyle: 'normal', fontSize: '16px'}}>{i}.</span>
       <span style={{textAlign: 'left', color: '#7975ff', fontWeight: '400', flexGrow: '1'}}>출발지를 입력해주세요</span>
-      {location || i>=3 ? <Button onClick={() => deleteItem(item.id)}> <img src={Close} /></Button> : null}
+      {location || i>=3 ? <Button onClick={(e) => {
+        e.stopPropagation();
+        deleteItem(item.id); }
+      }>
+        <img src={Close} /></Button> : null}
     </Div>
   )
 }
