@@ -1,0 +1,45 @@
+const fastAPI = (operation: any, url: string, params: string | string[][] | Record<string, string> | URLSearchParams | undefined, success_callback: (arg0: any) => void) => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    let method = operation
+    let content_type = 'application/json'
+    let body = JSON.stringify(params)
+
+    let _url = `${backendUrl}` + url
+    if (method === 'get') {
+        _url += "?" + new URLSearchParams(params)
+    }
+
+    let options: RequestInit = {
+        method: method,
+        headers: {
+            "Content-Type": content_type
+        }
+    }
+
+    if (method !== 'get') {
+        options['body'] = body
+    }
+
+    fetch(_url, options)
+        .then(response => {
+            response.json()
+                .then(json => {
+                    if (response.status >= 200 && response.status < 300) {  // 200 ~ 299
+                        if (success_callback) {
+                            success_callback(json)
+                        }
+                    } else {
+                        // if (failure_callback) {
+                        //     failure_callback(json)
+                        // } else {
+                        //     alert(JSON.stringify(json))
+                        // }
+                    }
+                })
+                .catch(error => {
+                    alert(JSON.stringify(error))
+                })
+        })
+}
+
+export default fastAPI

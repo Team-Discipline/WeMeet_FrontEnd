@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const NavContainer = styled.nav`
   background-color: #f8f8f8;
@@ -38,17 +38,18 @@ const Sign = styled.div`
 `;
 
 const Navbar = () => {
-  return (
-    <NavContainer>
-      <NavLinksContainer>
-        <NavLinkStyled to="/">Home</NavLinkStyled>
-        <Sign>
-          <NavLinkStyled to="/signin">SignIn</NavLinkStyled>
-          <NavLinkStyled to="/signup">SignUp</NavLinkStyled>
-        </Sign>
-      </NavLinksContainer>
-    </NavContainer>
-  );
+    return (
+        <NavContainer>
+            <NavLinksContainer>
+                <NavLinkStyled to="/">Home</NavLinkStyled>
+                <NavLinkStyled to="/noticeboard">NoticeBoard</NavLinkStyled>
+                <Sign>
+                    <NavLinkStyled to="/signin">SignIn</NavLinkStyled>
+                    <NavLinkStyled to="/signup">SignUp</NavLinkStyled>
+                </Sign>
+            </NavLinksContainer>
+        </NavContainer>
+    );
 };
 
 export default Navbar;

@@ -36,15 +36,6 @@ const SignInButton = styled.button`
 `;
 
 const SignIn = () => {
-    const backendUrl = process.env.REACT_APP_BACKEND_URL;
-    const testing = () => {
-        // API 호출 예시
-        fetch(`${backendUrl}/`)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-    }
-
     return (
         <SignInContainer>
             <h2>Sign In</h2>
@@ -57,7 +48,7 @@ const SignIn = () => {
                     Password:
                     <InputField type="password"/>
                 </InputLabel>
-                <SignInButton onClick={testing}>Sign In</SignInButton>
+                <SignInButton>Sign In</SignInButton>
             </SignInForm>
         </SignInContainer>
     );
