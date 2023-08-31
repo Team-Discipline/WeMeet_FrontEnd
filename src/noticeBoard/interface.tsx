@@ -1,9 +1,15 @@
 // Question.ts
-interface Question {
+
+export interface Question {
     id: number;
     subject: string;
     content: string;
     create_date: number;
+    answers: Answer[];
 }
 
-export default Question;
+export interface Answer {
+    id: number;
+    content: string;
+    create_date: number;
+}

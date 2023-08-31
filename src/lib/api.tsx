@@ -1,4 +1,4 @@
-const fastAPI = (operation: any, url: string, params: string | string[][] | Record<string, string> | URLSearchParams | undefined, success_callback: (arg0: any) => void) => {
+const fastAPI = (operation: any, url: string, params: {} | undefined, success_callback: (arg0: any) => void | undefined, failure_callback: ((arg0: any) => void) | undefined) => {
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
     let method = operation
     let content_type = 'application/json'
@@ -22,6 +22,12 @@ const fastAPI = (operation: any, url: string, params: string | string[][] | Reco
 
     fetch(_url, options)
         .then(response => {
+            if (response.status === 204) {  // No content
+                if (success_callback) {
+                    success_callback("")
+                }
+                return
+            }
             response.json()
                 .then(json => {
                     if (response.status >= 200 && response.status < 300) {  // 200 ~ 299
@@ -29,11 +35,11 @@ const fastAPI = (operation: any, url: string, params: string | string[][] | Reco
                             success_callback(json)
                         }
                     } else {
-                        // if (failure_callback) {
-                        //     failure_callback(json)
-                        // } else {
-                        //     alert(JSON.stringify(json))
-                        // }
+                        if (failure_callback) {
+                            failure_callback(json)
+                        } else {
+                            alert(JSON.stringify(json))
+                        }
                     }
                 })
                 .catch(error => {

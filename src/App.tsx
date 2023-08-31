@@ -9,6 +9,7 @@ import SignIn from "./loginPage/SignIn";
 import SignUp from "./loginPage/SignUp";
 import NoticeBoard from "./noticeBoard/page/NoticeBoard";
 import Detail from "./noticeBoard/page/Detail";
+import Create_question from "./noticeBoard/page/Create_question";
 
 function App() {
     return (
@@ -36,6 +37,9 @@ function App() {
                     }/>
                     <Route path="/noticeboard/detail/:question_id" element={
                         <Detail/>
+                    }/>
+                    <Route path="/question-creation" element={
+                        <Create_question/>
                     }/>
 
                 </Routes>

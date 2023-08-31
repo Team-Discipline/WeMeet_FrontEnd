@@ -22,32 +22,67 @@ const NavLinkStyled = styled(NavLink)`
 
 const NoticeBoard = () => {
     const [questionList, setQuestionList] = useState<Question[]>([]);
+    const [page, setPage] = useState(0)
+    const [total, setTotal] = useState(0)
+    const [totalPage, setTotalPage] = useState(0)
+    const size = 10;
 
-    const getQuestionList = (): void => {
-        fastAPI('get', '/question/list', {}, (json) => {
-            setQuestionList(json)
-        })
+    const get_question_list = (_page: React.SetStateAction<number>) => {
+        let params = {
+            page: _page,
+            size: size,
+        }
+        fastAPI('get', '/question/list', params, (json) => {
+            setQuestionList(json.question_list)
+            setTotal(json.total)
+            setTotalPage(Math.ceil(total / size))
+        }, undefined);
+    }
+
+    const next_page = () => {
+        if (page >= 0 && page <= totalPage) {
+            setPage(page + 1);
+        }
+    };
+
+    const prev_page = () => {
+        if (page > 0 && page < totalPage) {
+            setPage(page - 1)
+        }
     }
 
     useEffect(() => {
-        getQuestionList();
-    }, []);
+        get_question_list(page);
+    }, [page]);
 
     return (
-        <ul>
-            {questionList.map((question) => (
-                <li key={question.id}>
-                    <NavLinkStyled to={`/noticeboard/detail/${question.id}`}>{question.subject}</NavLinkStyled>
-                </li>
-            ))}
-        </ul>
+        <>
+            <table>
+                <thead>
+                <tr className="table-dark">
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성일시</th>
+                </tr>
+                </thead>
+                <tbody>
+                {questionList.map((question) => (
+                    <tr key={question.id}>
+                        <td>
+                            <NavLinkStyled to={`/noticeboard/detail/${question.id}`}>
+                                {question.subject}
+                            </NavLinkStyled>
+                        </td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+
+            <button onClick={prev_page}>이전</button>
+            <button onClick={next_page}>다음</button>
+            <NavLinkStyled to="/question-creation">질문 등록하기</NavLinkStyled>
+        </>
     );
 };
 
 export default NoticeBoard;
-
-
-// function setQuestionList(json: any) {
-//     throw new Error('Function not implemented.');
-// }
-
