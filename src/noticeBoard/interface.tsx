@@ -4,7 +4,7 @@ export interface Question {
     id: number;
     subject: string;
     content: string;
-    create_date: number;
+    create_date: string;
     answers: Answer[];
 }
 

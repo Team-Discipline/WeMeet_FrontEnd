@@ -17,7 +17,7 @@ const Detail = () => {
     const {question_id} = useParams();
     const [question, setQuestion] = useState<Question | null>({
         content: "",
-        create_date: 0,
+        create_date: "",
         id: 0,
         subject: "",
         answers: []

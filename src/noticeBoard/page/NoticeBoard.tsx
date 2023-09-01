@@ -1,24 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import fastAPI from "../../lib/api";
-import styled from "styled-components";
 import {NavLink} from "react-router-dom";
+import styled from "styled-components";
 
-interface Question {
-    id: number;
-    subject: string;
-    // Add other properties as needed
-}
+import fastAPI from "../../lib/api";
+import {Question} from "../interface";
 
-const NavLinkStyled = styled(NavLink)`
-  font-size: 16px;
-  color: #333;
-  cursor: pointer;
-  text-decoration: none;
-
-  &:hover {
-    color: #007bff;
-  }
-`;
 
 const NoticeBoard = () => {
     const [questionList, setQuestionList] = useState<Question[]>([]);
@@ -56,33 +42,155 @@ const NoticeBoard = () => {
     }, [page]);
 
     return (
-        <>
-            <table>
-                <thead>
-                <tr className="table-dark">
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성일시</th>
-                </tr>
-                </thead>
-                <tbody>
-                {questionList.map((question) => (
-                    <tr key={question.id}>
-                        <td>
-                            <NavLinkStyled to={`/noticeboard/detail/${question.id}`}>
-                                {question.subject}
-                            </NavLinkStyled>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-
-            <button onClick={prev_page}>이전</button>
-            <button onClick={next_page}>다음</button>
-            <NavLinkStyled to="/question-creation">질문 등록하기</NavLinkStyled>
-        </>
+        <Container>
+            <Table>
+                <Thead>
+                    <TitleTr>
+                        <Th>번호</Th>
+                        <ThContent>제목</ThContent>
+                        <ThContent>작성일시</ThContent>
+                    </TitleTr>
+                </Thead>
+                <TBody>
+                    {questionList.map((question) => (
+                        <TBodyTr key={question.id}>
+                            <TBodyTd>
+                                <NavLinkStyled to={`/noticeboard/detail/${question.id}`}>
+                                    <TBodyDiv>{question.id}</TBodyDiv>
+                                    <TBodyDivContent>{question.subject}</TBodyDivContent>
+                                    <TBodyDivContent>{question.create_date.slice(0, 10)}</TBodyDivContent>
+                                </NavLinkStyled>
+                            </TBodyTd>
+                        </TBodyTr>
+                    ))}
+                </TBody>
+            </Table>
+            <ControlBox>
+                <CreateQuestion to="/question-creation">질문 등록하기</CreateQuestion>
+                <Button onClick={prev_page}>이전</Button>
+                <Button onClick={next_page}>다음</Button>
+            </ControlBox>
+        </Container>
     );
 };
 
 export default NoticeBoard;
+
+
+const Container = styled.div`
+  width: 100%;
+  top: 25%;
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const NavLinkStyled = styled(NavLink)`
+  color: #333;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &:hover {
+    color: #007bff;
+  }
+`;
+
+const Table = styled.table`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 50%;
+  width: 100%;
+
+`;
+
+const Thead = styled.thead`
+  width: 100%;
+  height: 15%;
+`;
+
+const TitleTr = styled.tr`
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: whitesmoke;
+  display: flex;
+  align-items: center;
+`;
+
+const Th = styled.th`
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: left;
+  margin-left: 2%;
+`;
+
+const ThContent = styled(Th)`
+  flex-grow: 3;
+`;
+
+const TBody = styled.tbody`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const TBodyTr = styled.tr`
+  width: 100%;
+  height: 100%;
+  display: flex;
+`;
+
+const TBodyTd = styled.td`
+  width: 100%;
+  height: 100%;
+`;
+
+const TBodyDiv = styled.div`
+  flex-grow: 1;
+  flex-basis: 0;
+  text-align: left;
+  margin-left: 2%;
+`;
+
+const TBodyDivContent = styled(TBodyDiv)`
+  flex-grow: 3;
+`;
+
+const ControlBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const CreateQuestion = styled(NavLink)`
+  color: white;
+  font-size: 100%;
+  background-color: #3c9aff;
+  width: 20%;
+  height: 100%;
+  border-radius: 15px;
+  border-style: none;
+`;
+
+const Button = styled.button`
+  color: white;
+  font-size: 100%;
+  background-color: #3c9aff;
+  width: 20%;
+  height: 100%;
+  border-radius: 15px;
+  border-style: none;
+
+  &:hover {
+    color: #007bff;
+  }
+`;
