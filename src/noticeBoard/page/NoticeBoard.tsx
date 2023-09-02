@@ -49,8 +49,8 @@ const NoticeBoard = () => {
                 <Thead>
                     <TitleTr>
                         <Th>번호</Th>
-                        <ThContent>제목</ThContent>
-                        <ThContent>작성일</ThContent>
+                        <Th>제목</Th>
+                        <Th>작성일</Th>
                     </TitleTr>
                 </Thead>
                 <TBody>
@@ -59,8 +59,8 @@ const NoticeBoard = () => {
                             <TBodyTd>
                                 <NavLinkStyled to={`/noticeboard/detail/${question.id}`}>
                                     <TBodyDiv>{question.id}</TBodyDiv>
-                                    <TBodyDivContent>{question.subject}</TBodyDivContent>
-                                    <TBodyDivContent>{question.create_date.slice(0, 10)}</TBodyDivContent>
+                                    <TBodyDiv>{question.subject}</TBodyDiv>
+                                    <TBodyDiv>{question.create_date.slice(0, 10)}</TBodyDiv>
                                 </NavLinkStyled>
                             </TBodyTd>
                         </TBodyTr>
@@ -68,8 +68,8 @@ const NoticeBoard = () => {
                 </TBody>
             </Table>
             <ControlBox>
-                <CreateQuestion to="/question-creation">질문 등록하기</CreateQuestion>
                 <Button onClick={prev_page}>이전</Button>
+                <CreateQuestion to="/question-creation">질문 등록하기</CreateQuestion>
                 <Button onClick={next_page}>다음</Button>
             </ControlBox>
         </Container>
@@ -81,12 +81,11 @@ export default NoticeBoard;
 
 const Container = styled.div`
   width: 100%;
-  top: 25%;
+  top: 15%;
   height: 100vh;
-  left: 0;
   position: fixed;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -136,7 +135,6 @@ const Th = styled.th`
 
 const ThContent = styled(Th)`
   flex-grow: 3;
-  text-align: center;
 `;
 
 const TBody = styled.tbody`
@@ -166,13 +164,14 @@ const TBodyDiv = styled.div`
 
 const TBodyDivContent = styled(TBodyDiv)`
   flex-grow: 3;
-  text-align: center;
 `;
 
 const ControlBox = styled.div`
+  margin-top: 2%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const CreateQuestion = styled(NavLink)`
