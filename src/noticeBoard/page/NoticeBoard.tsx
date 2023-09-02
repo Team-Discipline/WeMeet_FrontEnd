@@ -10,7 +10,7 @@ const NoticeBoard = () => {
     const [questionList, setQuestionList] = useState<Question[]>([]);
     const [page, setPage] = useState(0)
     const [total, setTotal] = useState(0)
-    const [totalPage, setTotalPage] = useState(0)
+    const [totalPage, setTotalPage] = useState(1)
     const size = 10;
 
     const get_question_list = (_page: React.SetStateAction<number>) => {
@@ -26,13 +26,15 @@ const NoticeBoard = () => {
     }
 
     const next_page = () => {
-        if (page >= 0 && page <= totalPage) {
+        // page < totalPage로 하면 초반에 왜 인지 totalPage가 0으로 고정되어 있어서 값이 변하지 않음
+        // 오류 이유를 찾을 시 바로 고칠 예정
+        if (page <= totalPage && page != totalPage - 1) {
             setPage(page + 1);
         }
     };
 
     const prev_page = () => {
-        if (page > 0 && page < totalPage) {
+        if (page > 0) {
             setPage(page - 1)
         }
     }
@@ -48,7 +50,7 @@ const NoticeBoard = () => {
                     <TitleTr>
                         <Th>번호</Th>
                         <ThContent>제목</ThContent>
-                        <ThContent>작성일시</ThContent>
+                        <ThContent>작성일</ThContent>
                     </TitleTr>
                 </Thead>
                 <TBody>
@@ -134,6 +136,7 @@ const Th = styled.th`
 
 const ThContent = styled(Th)`
   flex-grow: 3;
+  text-align: center;
 `;
 
 const TBody = styled.tbody`
@@ -163,6 +166,7 @@ const TBodyDiv = styled.div`
 
 const TBodyDivContent = styled(TBodyDiv)`
   flex-grow: 3;
+  text-align: center;
 `;
 
 const ControlBox = styled.div`
@@ -172,6 +176,7 @@ const ControlBox = styled.div`
 `;
 
 const CreateQuestion = styled(NavLink)`
+  text-decoration: none;
   color: white;
   font-size: 100%;
   background-color: #3c9aff;
